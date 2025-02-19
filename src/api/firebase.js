@@ -1,0 +1,72 @@
+import { initializeApp } from 'firebase/app';
+import { v4 as uuid } from 'uuid';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { getDatabase, ref, get, set } from 'firebase/database';
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+//-> 계정선택화면이 안나오는 오류때문에 사용
+const database = getDatabase(app);
+export async function login() {
+  signInWithPopup(auth, provider).catch(console.error);
+}
+
+export async function logout() {
+  signOut(auth).catch(console.error);
+}
+
+export function ouUserStateChange(callback) {
+  onAuthStateChanged(auth, async (user) => {
+    const updatedUser = user ? await adminUser(user) : null;
+    callback(updatedUser);
+  });
+}
+async function adminUser(user) {
+  return get(ref(database, 'admin'))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const admin = snapshot.val();
+        // console.log('나는 snapshot', admin);
+        const isAdmin = admin.includes(user.uid);
+        // console.log(isAdmin);
+        return { ...user, isAdmin };
+      }
+      return user;
+    })
+    .catch(console.error);
+}
+
+export async function addNewProduct(product, url, url2) {
+  const id = uuid();
+  return set(ref(database, `product/${id}`), {
+    ...product,
+    id,
+    price: parseInt(product.price),
+    image: url,
+    image2: url2,
+    options: product.options.split(','),
+  });
+}
+
+export async function getProducts() {
+  return get(ref(database, 'product')).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
+}
