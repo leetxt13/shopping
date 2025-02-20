@@ -74,6 +74,7 @@ export async function getProducts() {
 export async function getCart(userId) {
   return get(ref(database, `carts/${userId}`)).then((snapshot) => {
     const items = snapshot.val() || {};
+    // console.log(items); // id와 image 배열을 받아옴
     return Object.values(items);
   });
 }
