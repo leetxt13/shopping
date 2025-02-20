@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '../component/ui/Button';
+import { useAuthContext } from '../context/AuthContext';
+import { addOrUpdateToCart } from '../api/firebase';
 
 export default function ProductDetail() {
+  const { uid } = useAuthContext();
   const {
     state: {
       product: {
@@ -21,13 +24,15 @@ export default function ProductDetail() {
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = (e) => {
     // 여기서 장바구니에 추가!
+    const product = { id, image, title, price, option: selected, quantity: 1 };
+    addOrUpdateToCart(uid, product);
   };
   return (
     <>
       <p className='mx-12 mt-4 text-gray-700'>{category}</p>
       <section className='flex flex-col md:flex-row p-4'>
         <img
-          className='w-full px-4 basis-6/12 h-40 md:h-auto'
+          className='w-full mx-auto basis-6/12 h-40 md:h-auto border border-1 rounded-md border-gray-700'
           src={image2}
           alt={title}
         />

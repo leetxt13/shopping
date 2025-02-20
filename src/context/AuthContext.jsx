@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { login, logout, ouUserStateChange } from '../../api/firebase';
+import { login, logout, ouUserStateChange } from '../api/firebase';
 const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState();
@@ -10,7 +10,9 @@ export function AuthContextProvider({ children }) {
     });
   }, []);
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, uid: user && user.uid }}
+    >
       {children}
     </AuthContext.Provider>
   );
