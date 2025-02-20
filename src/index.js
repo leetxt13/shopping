@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { index: true, path: '/', element: <Home /> },
       { path: '/products', element: <AllProducts /> },
       {
-        path: '/products/new',
+        path: '/product/new',
         element: (
           <ProtectedRoute requireAdmin>
             <NewProduct />
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/products/:id',
+        path: '/product/:id',
         element: <ProductDetail />,
       },
       {

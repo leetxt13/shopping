@@ -15,13 +15,13 @@ export default function Navbar() {
         className='flex items-center text-xl md:text-4xl text-brand pr-1'
       >
         <FiShoppingBag />
-        <h1>Shoppy</h1>
+        <h1 className='pl-1'>JoyShop</h1>
       </Link>
       <nav className='flex items-center gap-3 md:gap-4 font-semibold text-xs md:text-lg'>
         <Link to='/products'>Products</Link>
         {user && <Link to='/carts'>Carts</Link>}
         {user && user.isAdmin && (
-          <Link to='/products/new' className='text-2xl'>
+          <Link to='/product/new' className='text-2xl'>
             <BsFillPencilFill />
           </Link>
         )}
