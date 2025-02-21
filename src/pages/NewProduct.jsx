@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Button from './../component/ui/Button';
 import { uploadImage } from '../api/uploader';
-import { addNewProduct } from '../api/firebase';
+// import { addNewProduct } from '../api/firebase';
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useProducts from '../hooks/useProducts';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -11,10 +13,16 @@ export default function NewProduct() {
   const [url2, setUrl2] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+  // const queryClient = useQueryClient();
+  // const addProduct = useMutation({
+  //   mutationFn: ({ product, url, url2 }) => addNewProduct(product, url, url2),
+  //   onSuccess: async () => queryClient.invalidateQueries(['products']),
+  // });
+  const { addProduct } = useProducts();
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    console.log('e.target:', e.target);
-    console.log('files', files);
+    // console.log('e.target:', e.target);
+    // console.log('files', files);
     if (name === 'file') {
       setFile(files && files[0]);
       setFile2(files && files[1]);
@@ -25,26 +33,33 @@ export default function NewProduct() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
-    uploadImage(file).then((url) => {
-      console.log(url);
-      setUrl(url);
-    });
-    uploadImage(file2).then((url2) => {
-      console.log(url2);
-      setUrl2(url2);
-    });
-    setTimeout(() => {
-      addNewProduct(product, url, url2)
-        .then(() => {
-          setSuccess('성공적으로 제품이 추가되었습니다');
-        })
-        .finally(() => {
-          setIsUploading(false);
+    uploadImage(file)
+      .then((url) => {
+        console.log('url', url);
+        setUrl(url);
+      })
+      .then(() => {
+        uploadImage(file2).then((url2) => {
+          console.log('url2', url2);
+          setUrl2(url2);
+          setTimeout(() => {
+            addProduct.mutate(
+              { product, url, url2 },
+              {
+                onSuccess: () => {
+                  setSuccess('성공적으로 제품이 추가되었습니다');
+                  setTimeout(() => {
+                    setSuccess(null);
+                  }, 7000);
+                },
+              }
+            );
+          }, 4000);
         });
-    }, 12000);
-    setTimeout(() => {
-      setSuccess(null);
-    }, 15000);
+      })
+      .finally(() => {
+        setIsUploading(false);
+      });
   };
   return (
     <section className='w-full text-center'>
