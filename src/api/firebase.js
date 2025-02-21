@@ -7,8 +7,11 @@ import {
   signOut,
   onAuthStateChanged,
   signInWithRedirect,
+  getRedirectResult,
+  getAdditionalUserInfo,
 } from 'firebase/auth';
 import { getDatabase, ref, get, set, remove } from 'firebase/database';
+import { useEffect } from 'react';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -23,8 +26,8 @@ provider.setCustomParameters({ prompt: 'select_account' });
 //-> 계정선택화면이 안나오는 오류때문에 사용
 const database = getDatabase(app);
 export async function login() {
-  signInWithPopup(auth, provider).catch(console.error);
-  // signInWithRedirect(auth, provider).catch(console.error);
+  // signInWithPopup(auth, provider).catch(console.error);
+  signInWithRedirect(auth, provider);
 }
 
 export async function logout() {
