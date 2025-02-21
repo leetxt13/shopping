@@ -9,6 +9,7 @@ export default function CartStatus() {
     queryKey: ['carts'],
     queryFn: () => getCart(uid),
   });
+  console.log('products?', products);
   return (
     <div className='relative'>
       <AiOutlineShoppingCart className='text-4xl' />
