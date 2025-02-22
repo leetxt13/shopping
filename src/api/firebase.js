@@ -27,7 +27,7 @@ provider.setCustomParameters({ prompt: 'select_account' });
 const database = getDatabase(app);
 export async function login() {
   // signInWithPopup(auth, provider).catch(console.error);
-  signInWithRedirect(auth, provider);
+  signInWithPopup(auth, provider).catch(console.error);
 }
 
 export async function logout() {
