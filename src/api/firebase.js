@@ -26,8 +26,8 @@ provider.setCustomParameters({ prompt: 'select_account' });
 //-> 계정선택화면이 안나오는 오류때문에 사용
 const database = getDatabase(app);
 export async function login() {
-  // signInWithPopup(auth, provider).catch(console.error);
-  signInWithRedirect(auth, provider).catch(console.error);
+  signInWithPopup(auth, provider).catch(console.error);
+  // signInWithRedirect(auth, provider).catch(console.error);
 }
 
 export async function logout() {
