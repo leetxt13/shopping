@@ -4,7 +4,6 @@ import { getRedirectResult } from 'firebase/auth';
 const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState();
-
   useEffect(() => {
     ouUserStateChange((user) => {
       console.log('변화된User', user);

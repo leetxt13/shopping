@@ -9,7 +9,7 @@ export default function useCarts() {
   const cartsQuery = useQuery({
     queryKey: ['carts', uid || ''],
     queryFn: () => getCart(uid),
-    enabled: !!uid, // uid(null->false)가 없으면 쿼리 사용불가
+    // enabled: !!uid, // uid(null->false)가 없으면 쿼리 사용불가
   });
 
   const addOrUpdateItem = useMutation({
