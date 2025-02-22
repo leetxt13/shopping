@@ -25,11 +25,11 @@ export default function CartItem({
       <div className='flex-1 flex justify-between ml-4'>
         <div className='basis-3/5'>
           <p className='text-lg'>{title}</p>
-          <p className='text-xl font-bold text-brand'>{option}</p>
-          <p className='text-xl'>{price}원</p>
+          <p className='text-lg font-bold text-brand'>{option}</p>
+          <p className='text-lg'>{price}원</p>
         </div>
 
-        <div className='text-2xl flex items-center'>
+        <div className='text-xl flex items-center'>
           <AiOutlineMinusSquare onClick={handleMinus} className={ICON_CLASS} />
           <span>{quantity}</span>
           <AiOutlinePlusSquare onClick={handlePlus} className={ICON_CLASS} />
