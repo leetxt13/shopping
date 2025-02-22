@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { login, logout, ouUserStateChange } from '../api/firebase';
-import { getRedirectResult, auth, getAuth } from 'firebase/auth';
+import { login, logout, ouUserStateChange, auth } from '../api/firebase';
+import { getRedirectResult } from 'firebase/auth';
 const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState();
-  const auth = getAuth();
+
   useEffect(() => {
     ouUserStateChange((user) => {
       console.log('변화된User', user);

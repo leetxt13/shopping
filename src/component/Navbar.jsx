@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiShoppingBag } from 'react-icons/fi';
 import { BsFillPencilFill } from 'react-icons/bs';
@@ -6,9 +6,17 @@ import User from './User';
 import Button from './ui/Button';
 import { useAuthContext } from '../context/AuthContext';
 import CartStatus from './CartStatus';
+// import { getRedirectResult } from 'firebase/auth';
+// import { auth } from '../api/firebase';
+
 export default function Navbar() {
   const { user, login, logout } = useAuthContext();
-
+  // useEffect(() => {
+  //   async () => {
+  //     const response = await getRedirectResult(auth);
+  //     console.log(response);
+  //   };
+  // }, []);
   return (
     <header className='flex justify-between border-b border-gray-300 p-2'>
       <Link
