@@ -11,6 +11,7 @@ import NewProduct from './pages/NewProduct';
 import ProductDetail from './pages/ProductDetail';
 import MyCart from './pages/MyCart';
 import ProtectedRoute from './component/ProtectedRoute';
+import Final from './pages/Final';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           // <ProtectedRoute>
           <MyCart />
         ),
+      },
+      {
+        path: '/carts/showFinal',
+        element: <Final />,
       },
     ],
   },

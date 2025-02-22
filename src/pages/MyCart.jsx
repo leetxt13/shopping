@@ -8,9 +8,11 @@ import { FaEquals } from 'react-icons/fa';
 import PriceCard from '../component/PriceCard';
 import Button from '../component/ui/Button';
 import useCarts from '../hooks/useCarts';
+import { useNavigate } from 'react-router-dom';
 
 const SHIPPING = 2500;
 export default function MyCart() {
+  const navigate = useNavigate();
   // const { uid } = useAuthContext();
   const {
     cartsQuery: { isLoading, data: products },
@@ -48,7 +50,10 @@ export default function MyCart() {
             <FaEquals className='shrink-0' />
             <PriceCard text='총가격' price={totalPrice + SHIPPING} />
           </div>
-          <Button text='주문하기' />
+          <Button
+            text='주문하기'
+            onClick={() => navigate('/carts/showFinal')}
+          />
         </>
       )}
     </section>
